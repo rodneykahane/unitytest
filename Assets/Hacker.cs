@@ -12,6 +12,7 @@ public class Hacker : MonoBehaviour
     enum Screen { MainMenu, Password, Win};
     Screen currentScreen;
     string password;
+    int tries = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,7 @@ public class Hacker : MonoBehaviour
 
     void OnUserInput(string input)
     {
-        if (string.Compare(input, "menu") == 0)
+        if (input == "menu")
         {
             ShowMainMenu();
         }
@@ -57,18 +58,18 @@ public class Hacker : MonoBehaviour
         {
             level = 1;  
             password = "poop";
-            CheckPassword(input);
+            StartGame(level);
         }
         else if (String.Compare(input, "2") == 0)
         {
             level = 2;
-            password = "blah";
+            password = "suckit";
             StartGame(level);
         }
         else if (String.Compare(input, "3") == 0)  //we can always go direct to menu
         {
             level = 3;
-            password = "suck";
+            password = "bollocks";
             StartGame(level);
         }
         else if (String.Compare(input, "007") == 0)
@@ -87,35 +88,78 @@ public class Hacker : MonoBehaviour
         
         if(lvl == 1)
         {
-            Terminal.WriteLine("we're in level 1");
+            if (tries <= 2)
+            {
+                string[] easyHash = { "POPO", "OOPP", "OPPO" };
+                Terminal.WriteLine("The hash is: " + easyHash[tries]);
+            }
+            else
+            {
+                Fail();
+            }
         }
         else if (lvl == 2)
         {
-            Terminal.WriteLine("we're in level 2");
+            if (tries <= 2)
+            {
+                string[] medHash = { "SKTIUC", "TUCIKS", "SKICUT" };
+                Terminal.WriteLine("The hash is: " + medHash[tries]);
+            }
+            else
+            {
+                Fail();
+            }
         }
         else if (lvl == 3)
         {
-            Terminal.WriteLine("we're in level 3");
+            if (tries <= 2)
+            {
+                string[] hardHash = { "LOBLSKOC", "LSKOCLOB", "KOCLOBLSK" };
+                Terminal.WriteLine("The hash is: " + hardHash[tries]);
+            }
+            else
+            {
+                Fail();
+            }
         }
         
     }
+    
 
     void CheckPassword(string input)
     {
-        if(input == password)
+
+        if(input == password && tries <= 3)
         {
             Win();
         }
+        else if (tries == 2)
+        {
+            Fail();
+        }
+
         else
         {
             Terminal.WriteLine("Wrong password");
+            tries++;
+            StartGame(level);
             //RunMainMenu(level.ToString());
 
         }
+
+
     }
 
     void Win()
     {       
-        Terminal.WriteLine("Congrats, you're correct!");        
+        Terminal.WriteLine("Congrats, you're correct!");
+        Terminal.WriteLine("Type 'menu' and try a harder level!");
+    }
+
+    void Fail()
+    {
+        Terminal.WriteLine("You did not get it right");
+        Terminal.WriteLine("Type 'menu' to go back to the main menu");
+        tries = 0;
     }
 }
