@@ -11,6 +11,7 @@ public class Hacker : MonoBehaviour
     int level;
     enum Screen { MainMenu, Password, Win};
     Screen currentScreen;
+    string password;
 
     // Start is called before the first frame update
     void Start()
@@ -42,24 +43,33 @@ public class Hacker : MonoBehaviour
         {
             RunMainMenu(input);
         }
+        else if (currentScreen == Screen.Password)
+        {
+            CheckPassword(input);
+        }
+
+
     }//end OnUserInput()
 
     private void RunMainMenu(string input)
     {
         if (String.Compare(input, "1") == 0)
         {
-            level = 1;
-            StartGame();
+            level = 1;  
+            password = "poop";
+            CheckPassword(input);
         }
         else if (String.Compare(input, "2") == 0)
         {
             level = 2;
-            StartGame();
+            password = "blah";
+            StartGame(level);
         }
         else if (String.Compare(input, "3") == 0)  //we can always go direct to menu
         {
             level = 3;
-            StartGame();
+            password = "suck";
+            StartGame(level);
         }
         else if (String.Compare(input, "007") == 0)
         {
@@ -71,10 +81,41 @@ public class Hacker : MonoBehaviour
         }
     }
 
-    void StartGame()
+    void StartGame(int lvl)
     {
-        currentScreen = Screen.Password;
-        Terminal.WriteLine("the difficulty level is: " + level);
-        Terminal.WriteLine("Please enter your password: ");
+        currentScreen = Screen.Password; 
+        
+        if(lvl == 1)
+        {
+            Terminal.WriteLine("we're in level 1");
+        }
+        else if (lvl == 2)
+        {
+            Terminal.WriteLine("we're in level 2");
+        }
+        else if (lvl == 3)
+        {
+            Terminal.WriteLine("we're in level 3");
+        }
+        
+    }
+
+    void CheckPassword(string input)
+    {
+        if(input == password)
+        {
+            Win();
+        }
+        else
+        {
+            Terminal.WriteLine("Wrong password");
+            //RunMainMenu(level.ToString());
+
+        }
+    }
+
+    void Win()
+    {       
+        Terminal.WriteLine("Congrats, you're correct!");        
     }
 }
