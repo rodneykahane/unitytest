@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//doing another github test
 public class Hacker : MonoBehaviour
 {
     //game state
@@ -48,27 +46,28 @@ public class Hacker : MonoBehaviour
         {
             CheckPassword(input);
         }
-
-
     }//end OnUserInput()
 
     private void RunMainMenu(string input)
     {
-        if (String.Compare(input, "1") == 0)
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+        if (isValidLevelNumber)
         {
-            level = 1;  
+            level = int.Parse(input);
+        }
+
+        if (String.Compare(input, "1") == 0)
+        {            
             password = "poop";
             StartGame(level);
         }
         else if (String.Compare(input, "2") == 0)
-        {
-            level = 2;
+        {            
             password = "suckit";
             StartGame(level);
         }
         else if (String.Compare(input, "3") == 0)  //we can always go direct to menu
-        {
-            level = 3;
+        {            
             password = "bollocks";
             StartGame(level);
         }
@@ -90,6 +89,7 @@ public class Hacker : MonoBehaviour
         {
             if (tries <= 2)
             {
+                Terminal.ClearScreen();
                 string[] easyHash = { "POPO", "OOPP", "OPPO" };
                 Terminal.WriteLine("The hash is: " + easyHash[tries]);
             }
@@ -102,6 +102,7 @@ public class Hacker : MonoBehaviour
         {
             if (tries <= 2)
             {
+                Terminal.ClearScreen();
                 string[] medHash = { "SKTIUC", "TUCIKS", "SKICUT" };
                 Terminal.WriteLine("The hash is: " + medHash[tries]);
             }
@@ -114,6 +115,7 @@ public class Hacker : MonoBehaviour
         {
             if (tries <= 2)
             {
+                Terminal.ClearScreen();
                 string[] hardHash = { "LOBLSKOC", "LSKOCLOB", "KOCLOBLSK" };
                 Terminal.WriteLine("The hash is: " + hardHash[tries]);
             }
@@ -121,8 +123,7 @@ public class Hacker : MonoBehaviour
             {
                 Fail();
             }
-        }
-        
+        }        
     }
     
 
@@ -137,23 +138,19 @@ public class Hacker : MonoBehaviour
         {
             Fail();
         }
-
         else
         {
             Terminal.WriteLine("Wrong password");
             tries++;
             StartGame(level);
-            //RunMainMenu(level.ToString());
-
         }
-
-
     }
 
     void Win()
     {       
         Terminal.WriteLine("Congrats, you're correct!");
         Terminal.WriteLine("Type 'menu' and try a harder level!");
+        tries = 0;
     }
 
     void Fail()
