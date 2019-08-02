@@ -50,28 +50,16 @@ public class Hacker : MonoBehaviour
 
     private void RunMainMenu(string input)
     {
+        string[] passwords = { "poop", "suckit", "bollocks" };
         bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
-        if (isValidLevelNumber)
-        {
-            level = int.Parse(input);
-        }
 
-        if (String.Compare(input, "1") == 0)
+        if (isValidLevelNumber)
         {            
-            password = "poop";
+            level = int.Parse(input);
+            password = passwords[level - 1];
             StartGame(level);
-        }
-        else if (String.Compare(input, "2") == 0)
-        {            
-            password = "suckit";
-            StartGame(level);
-        }
-        else if (String.Compare(input, "3") == 0)  //we can always go direct to menu
-        {            
-            password = "bollocks";
-            StartGame(level);
-        }
-        else if (String.Compare(input, "007") == 0)
+        }   
+        else if (String.Compare(input, "007") == 0)  //easter egg :O
         {
             Terminal.WriteLine("Please make a selection Mr Bond!");
         }
@@ -79,57 +67,41 @@ public class Hacker : MonoBehaviour
         {
             Terminal.WriteLine("Press 1, 2, or 3");
         }
+        
     }
 
     void StartGame(int lvl)
     {
-        currentScreen = Screen.Password; 
-        
-        if(lvl == 1)
+        currentScreen = Screen.Password;
+
+        switch (lvl)
         {
-            if (tries <= 2)
-            {
+            case 1:
                 Terminal.ClearScreen();
                 string[] easyHash = { "POPO", "OOPP", "OPPO" };
                 Terminal.WriteLine("The hash is: " + easyHash[tries]);
-            }
-            else
-            {
-                Fail();
-            }
-        }
-        else if (lvl == 2)
-        {
-            if (tries <= 2)
-            {
+                break;
+
+            case 2:
                 Terminal.ClearScreen();
                 string[] medHash = { "SKTIUC", "TUCIKS", "SKICUT" };
                 Terminal.WriteLine("The hash is: " + medHash[tries]);
-            }
-            else
-            {
-                Fail();
-            }
-        }
-        else if (lvl == 3)
-        {
-            if (tries <= 2)
-            {
+                break;
+
+            case 3:
                 Terminal.ClearScreen();
                 string[] hardHash = { "LOBLSKOC", "LSKOCLOB", "KOCLOBLSK" };
                 Terminal.WriteLine("The hash is: " + hardHash[tries]);
-            }
-            else
-            {
-                Fail();
-            }
-        }        
+                break;
+            default:
+                Debug.LogError("Invalid level number!");
+                break;
+        }
     }
     
 
     void CheckPassword(string input)
     {
-
         if(input == password && tries <= 3)
         {
             Win();
@@ -148,7 +120,7 @@ public class Hacker : MonoBehaviour
 
     void Win()
     {       
-        Terminal.WriteLine("Congrats, you're correct!");
+        Terminal.WriteLine("Congrats, you're correct!");        
         Terminal.WriteLine("Type 'menu' and try a harder level!");
         tries = 0;
     }
@@ -159,4 +131,4 @@ public class Hacker : MonoBehaviour
         Terminal.WriteLine("Type 'menu' to go back to the main menu");
         tries = 0;
     }
-}
+}//end class
