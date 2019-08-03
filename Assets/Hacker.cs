@@ -121,9 +121,50 @@ public class Hacker : MonoBehaviour
     }
 
     void Win()
-    {       
-        Terminal.WriteLine("Congrats, you're correct!");        
-        Terminal.WriteLine("Type 'menu' and try a harder level!");
+    {
+        currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowLevelReward();
+    }
+
+    void ShowLevelReward()
+    {
+
+        switch (level)
+        {
+            case 1:
+                Terminal.WriteLine("Congrats, have a  book!");
+                Terminal.WriteLine(@"
+        ________
+       /       //
+      /       // 
+     /       // 
+    /_______//
+    (______(/
+
+                ");
+                Terminal.WriteLine("Type 'menu' and try a harder level!");
+                break;
+            case 2:
+                Terminal.WriteLine("yaaaay blah you won ...");
+                Terminal.WriteLine("");
+                Terminal.WriteLine("8===>");
+                Terminal.WriteLine("");
+                Terminal.WriteLine("Type 'menu' and try a harder level!");
+                break;
+            case 3:
+                Terminal.WriteLine("blaah, you won ...");
+                Terminal.WriteLine("");
+                Terminal.WriteLine("(o)(o)");
+                Terminal.WriteLine("");
+                Terminal.WriteLine("Type 'menu' and try a harder level!");
+                break;
+            default:
+                Debug.LogError("mmm mm, this aint right");
+                break;
+        }
+        
+        
         tries = 0;
     }
 
