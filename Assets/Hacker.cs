@@ -68,18 +68,20 @@ public class Hacker : MonoBehaviour
             Terminal.WriteLine("Press 1, 2, or 3");
         }
         
-    }
+    }   
 
     void StartGame(int lvl)
     {
         currentScreen = Screen.Password;
+        
 
         switch (lvl)
         {
             case 1:
                 Terminal.ClearScreen();
                 string[] easyHash = { "POPO", "OOPP", "OPPO" };
-                Terminal.WriteLine("The hash is: " + easyHash[tries]);
+                int index = UnityEngine.Random.Range(0, easyHash.Length);  //using random here for practice, the max value in Unity.Random.Range is actually max-1, ie (0,10) works out to (0,9)
+                Terminal.WriteLine("The hash is: " + easyHash[index]);
                 break;
 
             case 2:
